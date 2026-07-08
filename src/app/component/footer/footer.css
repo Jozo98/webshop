@@ -1,0 +1,24 @@
+h1 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+li:hover {
+  color: #f7a894;
+  cursor: pointer;
+}
+
+.footer-inner {
+  color: white;
+  padding: 3em;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1em;
+}

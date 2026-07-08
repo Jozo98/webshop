@@ -1,0 +1,19 @@
+:host {
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+ul li {
+    margin: 0.5em 0.5em 0.5em 0;
+}
+
+a:hover {
+    color: #f7a894;
+}
+
+hr {
+    color: #8B5CF6;
+    border: solid #8B5CF6 1px;
+}

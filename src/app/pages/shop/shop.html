@@ -1,0 +1,63 @@
+<div id="action-container">
+  <button class="btn btn-primary" (click)="openNewProduct()">Create New Product</button>
+  <button class="btn btn-secondary" (click)="openUpdateProduct()">Update Product</button>
+  <button class="btn btn-ghost">Filter</button>
+</div>
+<div id="newProduct-container">
+  <label>Name</label>
+  <input #nameInput placeholder="iPhone 20">
+  <label>Category</label>
+  <input #categoryInput placeholder="Smartphones">
+  <label>Price</label>
+  <input #priceInput type="number" placeholder="999">
+  <label>Description</label>
+  <input #descriptionInput placeholder="Description">
+  <button class="btn-save" type="button"
+  (click)="createProduct({
+    name: nameInput.value,
+    category: categoryInput.value,
+    price: priceInput.valueAsNumber,
+    description: descriptionInput.value
+  }); closeNewProduct()">
+  Save
+</button>
+<button class="btn-cancel" (click)="closeNewProduct()">Cancel</button>
+</div>
+<div id="updateProduct-container">
+  <select #productSelect (change)="onProductSelected(productSelect.value)">
+    <option value="" disabled selected>Select a product</option>
+    @for (product of products(); track product.id) {
+      <option [value]="product.id">{{ product.name }}</option>
+    }
+  </select>
+  @if (selectedProduct) {
+  <div id="updateProduct-fields">
+    <label>Name</label>
+    <input #editName [value]="selectedProduct.name">
+    <label>Category</label>
+    <input #editCategory [value]="selectedProduct.category">
+    <label>Price</label>
+    <input #editPrice type="number" [value]="selectedProduct.price">
+    <label>Description</label>
+    <input #editDescription [value]="selectedProduct.description">
+    <button class="btn-save" type="button"
+      (click)="updateSelectedProduct(editName.value, editCategory.value, editPrice.valueAsNumber, editDescription.value)">
+      Save
+    </button>
+  </div>
+}
+<button class="btn-cancel" type="button" (click)="closeUpdateProduct()">Cancel</button>
+</div>
+<div class="grid-container">
+    @for (product of products(); track product.id) {
+    <div class="box" id="box-6" (click)="createProduct(product)" (contextmenu)="onRightClick($event, product)">
+        <img [src]="imageFor(product)">
+        <div class="text-container">
+            <a class="text-title" href="/shop">{{ product.category }}</a>
+            <h1 class="text-price">{{ product.price }}.-</h1>
+            <h2 class="text-name">{{ product.name }}</h2>
+            <label class="text-description">{{ product.description }}</label>
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,94 @@
+:host {
+    display: block;
+    grid-area: nav;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 2%;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+border-top: solid #8B5CF6 10px;
+    width: 100%;
+    min-width: 700px;
+}
+
+nav form {
+    display: flex;
+    margin: 0 10%;
+    flex: 1;
+}
+
+nav form input {
+    width: 100%;
+    padding: 8px;
+    padding-left: 50px;
+}
+
+nav form button {
+    position:absolute;
+}
+
+.input-wrapper {
+    position:relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 300px;
+}
+
+.input-wrapper input {
+    border: 1px solid grey;
+    border-radius: 20px;
+    outline: none;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: black; /* or your brand color */
+}
+
+.icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.clear-btn { left: 12px; }
+.clear-btn:hover {
+    color:#f7a894
+}
+.search-btn { right: 12px; }
+.search-btn:hover {
+    color:#f7a894;
+}
+
+.navbar-wrapper ul li a {
+    display: inline-block;
+    padding: 16px 12px;
+}
+
+.navbar-wrapper  ul {
+    display: flex;
+    list-style: none;
+}
+
+ul a {
+    transition: transform 0.2s ease;
+}
+
+ul a:hover {
+    color: #f7a894;
+    transform: scale(1.1);
+}
+
+h1 {
+    font-size:30px;
+    font-weight:900;
+    margin-left: 0.5em;
+}

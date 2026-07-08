@@ -1,0 +1,274 @@
+:host {
+  grid-area: main;
+}
+
+.grid-container {
+  display: grid;
+  width: 100%;
+  padding: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  justify-content: center;
+  gap: 1em;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.box img {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.text-container {
+    padding: 1em;
+    border-top: 5px solid #8B5CF6;
+    flex-shrink: 0;
+}
+
+.text-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.text-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: red;
+  margin-bottom: 5px;
+}
+
+.text-name {
+    font-weight: bold;
+}
+
+.text-description {
+    opacity: 0.5;
+}
+
+#action-container {
+  display: flex;
+  gap: 0.75em;
+  padding: 1em;
+  padding-bottom: 0;
+}
+
+.btn {
+  padding: 0.65em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+/* Primary action — matches your accent color */
+.btn-primary {
+  background-color: #8B5CF6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+
+.btn-primary:hover {
+  background-color: #7c4de0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary action — outlined, for less prominent actions like "Update" */
+.btn-secondary {
+  background-color: white;
+  color: #8B5CF6;
+  border: 2px solid #8B5CF6;
+}
+
+.btn-secondary:hover {
+  background-color: #f5f0ff;
+}
+
+/* Tertiary / ghost — for something like "Filter" */
+.btn-ghost {
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #e0e0e0;
+}
+
+.btn-ghost:hover {
+  border-color: #8B5CF6;
+  color: #8B5CF6;
+}
+
+#newProduct-container {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75em;
+  padding: 1em;
+  margin: 1em;
+  margin-bottom: 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#newProduct-container.visible {
+  display: flex;
+}
+
+#newProduct-container label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+#newProduct-container input {
+  padding: 0.5em 0.8em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+#newProduct-container input:focus {
+  border-color: #8B5CF6;
+}
+
+#newProduct-container .btn-save {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  background-color: #8B5CF6;
+  color: white;
+  transition: background-color 0.15s ease;
+}
+
+#newProduct-container .btn-save:hover {
+  background-color: #7c4de0;
+}
+
+#newProduct-container .btn-cancel {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  background-color: transparent;
+  color: #333;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+#newProduct-container .btn-cancel:hover {
+  border-color: #999;
+  color: #000;
+}
+
+#updateProduct-container {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  padding: 1em;
+  margin: 1em;
+  margin-bottom: 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#updateProduct-container.visible {
+  display: flex;
+}
+
+#updateProduct-container select {
+  padding: 0.5em 0.8em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  background: white;
+  cursor: pointer;
+}
+
+#updateProduct-container select:focus {
+  border-color: #8B5CF6;
+}
+
+#updateProduct-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75em;
+}
+
+#updateProduct-fields label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+#updateProduct-fields input {
+  padding: 0.5em 0.8em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+#updateProduct-fields input:focus {
+  border-color: #8B5CF6;
+}
+
+#updateProduct-fields .btn-save {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  background-color: #8B5CF6;
+  color: white;
+  transition: background-color 0.15s ease;
+}
+
+#updateProduct-fields .btn-save:hover {
+  background-color: #7c4de0;
+}
+
+#updateProduct-container .btn-cancel {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  background-color: transparent;
+  color: #333;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+#updateProduct-fields .btn-cancel:hover {
+  border-color: #999;
+  color: #000;
+}

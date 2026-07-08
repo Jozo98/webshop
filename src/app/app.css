@@ -1,0 +1,35 @@
+:host {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'topnav'
+    'wrapper'
+    'botfooter';
+}
+
+navbar {
+  grid-area: topnav;
+  display: block;
+  width: 100%;
+}
+
+.content-wrapper {
+  grid-area: wrapper;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 'aside main';
+  max-width: 1920px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+footer {
+  grid-area: botfooter;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10em;
+  background-color: #8b5cf6;
+}
