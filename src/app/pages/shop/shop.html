@@ -1,7 +1,7 @@
 <div id="action-container">
   <button class="btn btn-primary" (click)="openNewProduct()">Create New Product</button>
   <button class="btn btn-secondary" (click)="openUpdateProduct()">Update Product</button>
-  <button class="btn btn-ghost">Filter</button>
+  <button class="btn btn-ghost" (click)="openFilter()">Filter</button>
 </div>
 <div id="newProduct-container">
   <label>Name</label>
@@ -12,22 +12,21 @@
   <input #priceInput type="number" placeholder="999">
   <label>Description</label>
   <input #descriptionInput placeholder="Description">
-  <button class="btn-save" type="button"
-  (click)="createProduct({
+  <button class="btn-save" type="button" (click)="createProduct({
     name: nameInput.value,
     category: categoryInput.value,
     price: priceInput.valueAsNumber,
     description: descriptionInput.value
   }); closeNewProduct()">
-  Save
-</button>
-<button class="btn-cancel" (click)="closeNewProduct()">Cancel</button>
+    Save
+  </button>
+  <button class="btn-cancel" (click)="closeNewProduct()">Cancel</button>
 </div>
 <div id="updateProduct-container">
   <select #productSelect (change)="onProductSelected(productSelect.value)">
     <option value="" disabled selected>Select a product</option>
     @for (product of products(); track product.id) {
-      <option [value]="product.id">{{ product.name }}</option>
+    <option [value]="product.id">{{ product.name }}</option>
     }
   </select>
   @if (selectedProduct) {
@@ -45,19 +44,38 @@
       Save
     </button>
   </div>
-}
-<button class="btn-cancel" type="button" (click)="closeUpdateProduct()">Cancel</button>
+  }
+  <button class="btn-cancel" type="button" (click)="closeUpdateProduct()">Cancel</button>
+</div>
+<div id="filter-container">
+  <div id="filter-fields">
+    <input type="text" placeholder="Name" #name>
+    <select #price>
+      <option value="">-</option>
+      <option value="asc">Asc</option>
+      <option value="dsc">Dsc</option>
+    </select>
+    <select #category>
+      <option value="">All categories</option>
+     @for (category of categories(); track category) {
+      <option [value]="category">{{category}}</option>
+     }
+    </select>
+    <button class="btn-save" (click)="startFilter(name.value, price.value, category.value)">Filter</button>
+    
+  </div>
+   <button class="btn-cancel" type="button" (click)="closeFilter()">Cancel</button>
 </div>
 <div class="grid-container">
-    @for (product of products(); track product.id) {
-    <div class="box" id="box-6" (click)="createProduct(product)" (contextmenu)="onRightClick($event, product)">
-        <img [src]="imageFor(product)">
-        <div class="text-container">
-            <a class="text-title" href="/shop">{{ product.category }}</a>
-            <h1 class="text-price">{{ product.price }}.-</h1>
-            <h2 class="text-name">{{ product.name }}</h2>
-            <label class="text-description">{{ product.description }}</label>
-        </div>
+  @for (product of displayedProducts(); track product.id) {
+  <div class="box" id="box-6" (click)="createProduct(product)" (contextmenu)="onRightClick($event, product)">
+    <img [src]="imageFor(product)">
+    <div class="text-container">
+      <a class="text-title" href="/shop">{{ product.category }}</a>
+      <h1 class="text-price">{{ product.price }}.-</h1>
+      <h2 class="text-name">{{ product.name }}</h2>
+      <label class="text-description">{{ product.description }}</label>
     </div>
-    }
+  </div>
+  }
 </div>

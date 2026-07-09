@@ -6,7 +6,7 @@
   display: grid;
   width: 100%;
   padding: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   justify-content: center;
   gap: 1em;
 }
@@ -15,8 +15,6 @@
   display: flex;
   flex-direction: column;
   aspect-ratio: 1/1;
-  width: 100%;
-  height: 100%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   overflow: hidden;
@@ -196,11 +194,9 @@
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-
 #updateProduct-container.visible {
   display: flex;
 }
-
 #updateProduct-container select {
   padding: 0.5em 0.8em;
   border: 2px solid #e0e0e0;
@@ -210,11 +206,9 @@
   background: white;
   cursor: pointer;
 }
-
 #updateProduct-container select:focus {
   border-color: #8B5CF6;
 }
-
 #updateProduct-fields {
   display: flex;
   flex-direction: row;
@@ -222,12 +216,10 @@
   flex-wrap: wrap;
   gap: 0.75em;
 }
-
 #updateProduct-fields label {
   font-weight: bold;
   font-size: 0.9rem;
 }
-
 #updateProduct-fields input {
   padding: 0.5em 0.8em;
   border: 2px solid #e0e0e0;
@@ -235,11 +227,9 @@
   font-size: 1rem;
   outline: none;
 }
-
 #updateProduct-fields input:focus {
   border-color: #8B5CF6;
 }
-
 #updateProduct-fields .btn-save {
   padding: 0.6em 1.4em;
   border-radius: 12px;
@@ -251,11 +241,9 @@
   color: white;
   transition: background-color 0.15s ease;
 }
-
 #updateProduct-fields .btn-save:hover {
   background-color: #7c4de0;
 }
-
 #updateProduct-container .btn-cancel {
   padding: 0.6em 1.4em;
   border-radius: 12px;
@@ -267,8 +255,86 @@
   color: #333;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
-
 #updateProduct-fields .btn-cancel:hover {
+  border-color: #999;
+  color: #000;
+}
+
+#filter-container {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  padding: 1em;
+  margin: 1em;
+  margin-bottom: 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+#filter-container.visible {
+  display: flex;
+}
+#filter-container select {
+  padding: 0.5em 0.8em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  background: white;
+  cursor: pointer;
+}
+#filter-container select:focus {
+  border-color: #8B5CF6;
+}
+#filter-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75em;
+}
+#filter-fields label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+#filter-fields input {
+  padding: 0.5em 0.8em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+#filter-fields input:focus {
+  border-color: #8B5CF6;
+}
+#filter-fields .btn-save {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  background-color: #8B5CF6;
+  color: white;
+  transition: background-color 0.15s ease;
+}
+#filter-fields .btn-save:hover {
+  background-color: #7c4de0;
+}
+#filter-container .btn-cancel {
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  background-color: transparent;
+  color: #333;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+#filter-fields .btn-cancel:hover {
   border-color: #999;
   color: #000;
 }

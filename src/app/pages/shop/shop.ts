@@ -1,4 +1,4 @@
-import { Component, DestroyRef, signal, inject } from '@angular/core';
+import { Component, DestroyRef, signal, inject, computed } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,20 +10,58 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './shop.css',
 })
 export class Shop {
-  openUpdateProduct() {
-  const container = document.getElementById('updateProduct-container');
-  if (container) { container.classList.add('visible'); }
-  const self = document.getElementById('action-container');
-  if (self) { self.style.display = 'none'; }
-}
 
-closeUpdateProduct() {
-  const container = document.getElementById('updateProduct-container');
-  if (container) { container.classList.remove('visible'); }
-  this.selectedProduct = undefined;
-  const self = document.getElementById('action-container');
-  if (self) { self.style.display = 'flex'; }
-}
+  products = signal<Product[]>([]);
+  displayedProducts = signal<Product[]>([]);
+  product?: Product;
+  private destroyRef = inject(DestroyRef);
+  categories = computed(() => {
+    const allCategories = this.products().map(p => p.category);
+    return [...new Set(allCategories)];
+  });
+
+  closeFilter() {
+    const container = document.getElementById('filter-container');
+    if (container) { container.classList.remove('visible'); }
+    const self = document.getElementById('action-container');
+    if (self) { self.style.display = 'flex'; }
+    this.loadProducts();
+  }
+  openFilter() {
+    const container = document.getElementById('filter-container');
+    if (container) { container.classList.add('visible'); }
+    const self = document.getElementById('action-container');
+    if (self) { self.style.display = 'none'; }
+  }
+
+  startFilter(name: string, price: string, category: string) {
+    let sorted: Product[] = [];
+    sorted = [...this.products()];
+    sorted = sorted.filter(sorted => sorted.name.toLowerCase().includes(name.toLowerCase()))
+      .filter(sorted => sorted.category.toLowerCase().includes(category.toLowerCase()));
+    if (price == "asc") {
+      sorted.sort((a, b) => a.price - b.price )
+    } else if (price == "dsc") {
+        sorted.sort((a, b) => b.price - a.price )
+    }
+    this.displayedProducts.set(sorted);
+    console.log("filtering done");
+  }
+
+  openUpdateProduct() {
+    const container = document.getElementById('updateProduct-container');
+    if (container) { container.classList.add('visible'); }
+    const self = document.getElementById('action-container');
+    if (self) { self.style.display = 'none'; }
+  }
+
+  closeUpdateProduct() {
+    const container = document.getElementById('updateProduct-container');
+    if (container) { container.classList.remove('visible'); }
+    this.selectedProduct = undefined;
+    const self = document.getElementById('action-container');
+    if (self) { self.style.display = 'flex'; }
+  }
 
   updateSelectedProduct(name: string, category: string, price: number, description: string) {
     if (!this.selectedProduct) return;
@@ -63,10 +101,6 @@ closeUpdateProduct() {
     if (self) { self.style.display = 'none'; }
   }
 
-  products = signal<Product[]>([]);
-  product?: Product;
-  private destroyRef = inject(DestroyRef);
-
   constructor(private productService: ProductService) { }
 
   private readonly categoryImages: Record<string, string> = {
@@ -100,7 +134,11 @@ closeUpdateProduct() {
   //getAll
   loadProducts(): void {
     const subscription = this.productService.getAll().subscribe({
-      next: (data) => this.products.set(data._embedded.productList),
+      next: (data) => {
+        this.products.set(data._embedded.productList);
+        this.displayedProducts.set(data._embedded.productList);
+
+      },
       error: (err) => console.error('Failed to load products:', err)
     });
 
