@@ -17,11 +17,14 @@ removeItem(product: Product) {
   isCartOpen = signal(false);
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['product'] && this.product) {
+  if (changes['product'] && this.product) {
+    const exists = this.products().some(p => p.id === this.product!.id);
+    if (!exists) {
       this.products.update(products => [...products, this.product!]);
-      console.log(this.products().length);
     }
+    console.log(this.products().length);
   }
+}
 
   toggleCart() {
     this.isCartOpen.update(open => !open);
