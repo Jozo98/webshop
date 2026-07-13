@@ -30,9 +30,9 @@
 }
 
 .text-container {
-    padding: 1em;
-    border-top: 5px solid #8B5CF6;
-    flex-shrink: 0;
+  padding: 1em;
+  border-top: 5px solid #8B5CF6;
+  flex-shrink: 0;
 }
 
 .text-title {
@@ -50,11 +50,11 @@
 }
 
 .text-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .text-description {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 #action-container {
@@ -64,6 +64,7 @@
   padding-bottom: 0;
 }
 
+
 .btn {
   padding: 0.65em 1.4em;
   border-radius: 12px;
@@ -71,10 +72,10 @@
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-/* Primary action — matches your accent color */
 .btn-primary {
   background-color: #8B5CF6;
   color: white;
@@ -91,7 +92,6 @@
   transform: translateY(0);
 }
 
-/* Secondary action — outlined, for less prominent actions like "Update" */
 .btn-secondary {
   background-color: white;
   color: #8B5CF6;
@@ -102,7 +102,6 @@
   background-color: #f5f0ff;
 }
 
-/* Tertiary / ghost — for something like "Filter" */
 .btn-ghost {
   background-color: transparent;
   color: #333;
@@ -114,74 +113,27 @@
   color: #8B5CF6;
 }
 
-#newProduct-container {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.75em;
-  padding: 1em;
-  margin: 1em;
-  margin-bottom: 0;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-#newProduct-container.visible {
-  display: flex;
-}
-
-#newProduct-container label {
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-
-#newProduct-container input {
-  padding: 0.5em 0.8em;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-}
-
-#newProduct-container input:focus {
-  border-color: #8B5CF6;
-}
-
-#newProduct-container .btn-save {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: none;
-  cursor: pointer;
+.btn-save {
   background-color: #8B5CF6;
   color: white;
-  transition: background-color 0.15s ease;
 }
 
-#newProduct-container .btn-save:hover {
+.btn-save:hover {
   background-color: #7c4de0;
 }
 
-#newProduct-container .btn-cancel {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: 2px solid #e0e0e0;
-  cursor: pointer;
+.btn-cancel {
   background-color: transparent;
   color: #333;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  border: 2px solid #e0e0e0;
 }
 
-#newProduct-container .btn-cancel:hover {
+.btn-cancel:hover {
   border-color: #999;
   color: #000;
 }
 
-#updateProduct-container {
+.panel {
   display: none;
   flex-direction: row;
   align-items: center;
@@ -194,147 +146,39 @@
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-#updateProduct-container.visible {
+
+.panel.visible {
   display: flex;
-}
-#updateProduct-container select {
-  padding: 0.5em 0.8em;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-  background: white;
-  cursor: pointer;
-}
-#updateProduct-container select:focus {
-  border-color: #8B5CF6;
-}
-#updateProduct-fields {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75em;
-}
-#updateProduct-fields label {
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-#updateProduct-fields input {
-  padding: 0.5em 0.8em;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-}
-#updateProduct-fields input:focus {
-  border-color: #8B5CF6;
-}
-#updateProduct-fields .btn-save {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: none;
-  cursor: pointer;
-  background-color: #8B5CF6;
-  color: white;
-  transition: background-color 0.15s ease;
-}
-#updateProduct-fields .btn-save:hover {
-  background-color: #7c4de0;
-}
-#updateProduct-container .btn-cancel {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: 2px solid #e0e0e0;
-  cursor: pointer;
-  background-color: transparent;
-  color: #333;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-#updateProduct-fields .btn-cancel:hover {
-  border-color: #999;
-  color: #000;
 }
 
-#filter-container {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75em;
-  padding: 1em;
-  margin: 1em;
-  margin-bottom: 0;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-#filter-container.visible {
-  display: flex;
-}
-#filter-container select {
-  padding: 0.5em 0.8em;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 1rem;
-  outline: none;
-  background: white;
-  cursor: pointer;
-}
-#filter-container select:focus {
-  border-color: #8B5CF6;
-}
-#filter-fields {
+.panel-fields {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.75em;
 }
-#filter-fields label {
+
+.panel label {
   font-weight: bold;
   font-size: 0.9rem;
 }
-#filter-fields input {
+
+.panel input,
+.panel select {
   padding: 0.5em 0.8em;
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
 }
-#filter-fields input:focus {
+
+.panel select {
+  background: white;
+  cursor: pointer;
+}
+
+.panel input:focus,
+.panel select:focus {
   border-color: #8B5CF6;
-}
-#filter-fields .btn-save {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: none;
-  cursor: pointer;
-  background-color: #8B5CF6;
-  color: white;
-  transition: background-color 0.15s ease;
-}
-#filter-fields .btn-save:hover {
-  background-color: #7c4de0;
-}
-#filter-container .btn-cancel {
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  border: 2px solid #e0e0e0;
-  cursor: pointer;
-  background-color: transparent;
-  color: #333;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-#filter-fields .btn-cancel:hover {
-  border-color: #999;
-  color: #000;
 }

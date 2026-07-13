@@ -3,7 +3,7 @@
   <button class="btn btn-secondary" (click)="openUpdateProduct()">Update Product</button>
   <button class="btn btn-ghost" (click)="openFilter()">Filter</button>
 </div>
-<div id="newProduct-container">
+<div id="newProduct-container" class="panel">
   <label>Name</label>
   <input #nameInput placeholder="iPhone 20">
   <label>Category</label>
@@ -12,7 +12,7 @@
   <input #priceInput type="number" placeholder="999">
   <label>Description</label>
   <input #descriptionInput placeholder="Description">
-  <button class="btn-save" type="button" (click)="createProduct({
+  <button class="btn btn-save" type="button" (click)="createProduct({
     name: nameInput.value,
     category: categoryInput.value,
     price: priceInput.valueAsNumber,
@@ -20,9 +20,9 @@
   }); closeNewProduct()">
     Save
   </button>
-  <button class="btn-cancel" (click)="closeNewProduct()">Cancel</button>
+  <button class="btn btn-cancel" (click)="closeNewProduct()">Cancel</button>
 </div>
-<div id="updateProduct-container">
+<div id="updateProduct-container" class="panel">
   <select #productSelect (change)="onProductSelected(productSelect.value)">
     <option value="" disabled selected>Select a product</option>
     @for (product of products(); track product.id) {
@@ -30,7 +30,7 @@
     }
   </select>
   @if (selectedProduct) {
-  <div id="updateProduct-fields">
+  <div id="updateProduct-fields" class="panel-fields">
     <label>Name</label>
     <input #editName [value]="selectedProduct.name">
     <label>Category</label>
@@ -39,16 +39,16 @@
     <input #editPrice type="number" [value]="selectedProduct.price">
     <label>Description</label>
     <input #editDescription [value]="selectedProduct.description">
-    <button class="btn-save" type="button"
+    <button class="btn btn-save" type="button"
       (click)="updateSelectedProduct(editName.value, editCategory.value, editPrice.valueAsNumber, editDescription.value)">
       Save
     </button>
   </div>
   }
-  <button class="btn-cancel" type="button" (click)="closeUpdateProduct()">Cancel</button>
+  <button class="btn btn-cancel" type="button" (click)="closeUpdateProduct()">Cancel</button>
 </div>
-<div id="filter-container">
-  <div id="filter-fields">
+<div id="filter-container" class="panel">
+  <div id="filter-fields" class="panel-fields">
     <input type="text" placeholder="Name" #name>
     <select #price>
       <option value="">-</option>
@@ -61,10 +61,10 @@
       <option [value]="category">{{category}}</option>
      }
     </select>
-    <button class="btn-save" (click)="startFilter(name.value, price.value, category.value)">Filter</button>
+    <button class="btn btn-save" (click)="startFilter(name.value, price.value, category.value)">Filter</button>
     
   </div>
-   <button class="btn-cancel" type="button" (click)="closeFilter()">Cancel</button>
+   <button class="btn btn-cancel" type="button" (click)="closeFilter()">Cancel</button>
 </div>
 <div class="grid-container">
   @for (product of displayedProducts(); track product.id) {

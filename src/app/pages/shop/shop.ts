@@ -14,11 +14,29 @@ export class Shop {
   products = signal<Product[]>([]);
   displayedProducts = signal<Product[]>([]);
   product?: Product;
+  selectedProduct?: Product;
   private destroyRef = inject(DestroyRef);
+
   categories = computed(() => {
     const allCategories = this.products().map(p => p.category);
     return [...new Set(allCategories)];
   });
+
+  private readonly categoryImages: Record<string, string> = {
+    'Audio': 'apple_kopfhörer.jpg',
+    'Smartphones': 'phone.webp',
+    'Laptops': 'laptop-3.webp',
+    'Tablets': 'tablet.jpg',
+    'Wearables': 'watch.webp',
+    'Accessories': 'mouse.webp',
+    'Monitors': 'monitor.webp',
+    'Gaming': 'gaming.jpg',
+    'Drones': 'drone.webp',
+    'Cameras': 'camera.jpg',
+    'E-Readers': 'ereader.avif',
+  };
+
+  constructor(private productService: ProductService) { }
 
   closeFilter() {
     const container = document.getElementById('filter-container');
@@ -79,7 +97,6 @@ export class Shop {
       error: (err) => console.error('Failed to update', err)
     });
   }
-  selectedProduct?: Product;
 
   onProductSelected(idStr: string) {
     const id = Number(idStr);
@@ -101,22 +118,6 @@ export class Shop {
     if (self) { self.style.display = 'none'; }
   }
 
-  constructor(private productService: ProductService) { }
-
-  private readonly categoryImages: Record<string, string> = {
-    'Audio': 'apple_kopfhörer.jpg',
-    'Smartphones': 'phone.webp',
-    'Laptops': 'laptop-3.webp',
-    'Tablets': 'tablet.jpg',
-    'Wearables': 'watch.webp',
-    'Accessories': 'mouse.webp',
-    'Monitors': 'monitor.webp',
-    'Gaming': 'gaming.jpg',
-    'Drones': 'drone.webp',
-    'Cameras': 'camera.jpg',
-    'E-Readers': 'ereader.avif',
-  };
-
   imageFor(product: Product): string {
     const filename = this.categoryImages[product.category] ?? 'placeholder.webp';
     return `/resources/${filename}`;
@@ -137,7 +138,6 @@ export class Shop {
       next: (data) => {
         this.products.set(data._embedded.productList);
         this.displayedProducts.set(data._embedded.productList);
-
       },
       error: (err) => console.error('Failed to load products:', err)
     });
