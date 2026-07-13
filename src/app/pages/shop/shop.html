@@ -68,7 +68,7 @@
 </div>
 <div class="grid-container">
   @for (product of displayedProducts(); track product.id) {
-  <div class="box" id="box-6" (click)="createProduct(product)" (contextmenu)="onRightClick($event, product)">
+  <div class="box" (click)="onSubmit(product)" (contextmenu)="onRightClick($event, product)">
     <img [src]="imageFor(product)">
     <div class="text-container">
       <a class="text-title" href="/shop">{{ product.category }}</a>

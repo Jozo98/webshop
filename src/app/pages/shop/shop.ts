@@ -1,4 +1,4 @@
-import { Component, DestroyRef, signal, inject, computed } from '@angular/core';
+import { Component, DestroyRef, signal, inject, computed, Output, EventEmitter } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class Shop {
 
+  @Output() cart = new EventEmitter<Product>();
   products = signal<Product[]>([]);
   displayedProducts = signal<Product[]>([]);
   product?: Product;
@@ -208,5 +209,9 @@ export class Shop {
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     })
+  }
+
+  onSubmit(product: Product) {
+    this.cart.emit(product);
   }
 }

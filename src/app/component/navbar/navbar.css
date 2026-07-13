@@ -1,52 +1,52 @@
 :host {
-    display: block;
-    grid-area: nav;
+  display: block;
+  grid-area: nav;
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 2%;
-    background-color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-border-top: solid #8B5CF6 10px;
-    width: 100%;
-    min-width: 700px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 2%;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-top: solid #8b5cf6 10px;
+  width: 100%;
+  min-width: 700px;
 }
 
 nav form {
-    display: flex;
-    margin: 0 10%;
-    flex: 1;
+  display: flex;
+  margin: 0 10%;
+  flex: 1;
 }
 
 nav form input {
-    width: 100%;
-    padding: 8px;
-    padding-left: 50px;
+  width: 100%;
+  padding: 8px;
+  padding-left: 50px;
 }
 
 nav form button {
-    position:absolute;
+  position: absolute;
 }
 
 .input-wrapper {
-    position:relative;
-    display: inline-block;
-    width: 100%;
-    min-width: 300px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 300px;
 }
 
 .input-wrapper input {
-    border: 1px solid grey;
-    border-radius: 20px;
-    outline: none;
+  border: 1px solid grey;
+  border-radius: 20px;
+  outline: none;
 }
 
 .input-wrapper input:focus {
-    outline: none;
-    border-color: black; /* or your brand color */
+  outline: none;
+  border-color: black; /* or your brand color */
 }
 
 .icon-btn {
@@ -59,36 +59,138 @@ nav form button {
   padding: 4px;
 }
 
-.clear-btn { left: 12px; }
-.clear-btn:hover {
-    color:#f7a894
+.clear-btn {
+  left: 12px;
 }
-.search-btn { right: 12px; }
+.clear-btn:hover {
+  color: #f7a894;
+}
+.search-btn {
+  right: 12px;
+}
 .search-btn:hover {
-    color:#f7a894;
+  color: #f7a894;
 }
 
 .navbar-wrapper ul li a {
-    display: inline-block;
-    padding: 16px 12px;
+  display: inline-block;
+  padding: 16px 12px;
 }
 
-.navbar-wrapper  ul {
-    display: flex;
-    list-style: none;
+.navbar-wrapper ul {
+  display: flex;
+  list-style: none;
 }
 
 ul a {
-    transition: transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 ul a:hover {
-    color: #f7a894;
-    transform: scale(1.1);
+  color: #f7a894;
+  transform: scale(1.1);
 }
 
 h1 {
-    font-size:30px;
-    font-weight:900;
-    margin-left: 0.5em;
+  font-size: 30px;
+  font-weight: 900;
+  margin-left: 0.5em;
+}
+
+#cart-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#cart-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  z-index: 100;
+}
+
+#cart-popup .cart-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#cart-popup .cart-item:last-child {
+  border-bottom: none;
+}
+
+#cart-popup .cart-item p {
+  margin: 0;
+}
+
+#cart-popup .product-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+#cart-popup .product-price {
+  font-size: 13px;
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+#cart-popup .product-description {
+  font-size: 12px;
+  color: #777;
+}
+
+#cart-popup .empty-cart {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  padding: 16px 0;
+}
+
+.cart-badge {
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  margin-left: 4px;
+}
+
+#cart-popup .checkout-btn {
+  display: block;
+  margin-left: auto;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+#cart-popup .checkout-btn:hover {
+  background: #7c3aed;
+  transform: scale(1.03);
+}
+
+#cart-popup .checkout-btn:active {
+  transform: scale(0.98);
 }

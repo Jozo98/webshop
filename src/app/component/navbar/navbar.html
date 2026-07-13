@@ -1,5 +1,5 @@
 <nav>
-    <a href="/" class="brand"><img src="/resources/cpu-turm.png" style="height: 40px; width: auto;" ></a>
+    <a href="/" class="brand"><img src="/resources/cpu-turm.png" style="height: 40px; width: auto;"></a>
     <h1 style="display: inline-block; transform: skew(-10deg);">InTech</h1>
     <form>
         <div class="input-wrapper">
@@ -13,6 +13,25 @@
             <li><a href="/">Home</a></li>
             <li><a href="/shop">Shop</a></li>
             <li><a href="#about">About</a></li>
+            <li id="cart-field">
+                <a href="#cart" (click)="toggleCart(); $event.preventDefault()">
+                    Cart <span class="cart-badge">{{ products().length }}</span>
+                </a>
+                @if (isCartOpen()) {
+                <div id="cart-popup">
+                    @for (product of products(); track product.id) {
+                    <div class="cart-item" (click)="removeItem(product)">
+                        <p class="product-name">{{ product.name }}</p>
+                        <p class="product-price">${{ product.price }}</p>
+                        <p class="product-description">{{ product.description }}</p>
+                    </div>
+                    } @empty {
+                    <p class="empty-cart">Your cart is empty</p>
+                    }
+                    <button class="checkout-btn">Checkout</button>
+                </div>
+                }
+            </li>
         </ul>
     </div>
 </nav>

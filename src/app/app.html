@@ -1,6 +1,6 @@
-<navbar></navbar>
+<navbar [product]="product"></navbar>
 <div class="content-wrapper">
   <sidemenu></sidemenu>
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 <footer></footer>
