@@ -194,3 +194,23 @@ h1 {
 #cart-popup .checkout-btn:active {
   transform: scale(0.98);
 }
+
+#cart-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+#cart-bottom span {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+#cart-bottom .checkout-btn {
+  margin-left: 0;
+  margin-top: 0;
+}

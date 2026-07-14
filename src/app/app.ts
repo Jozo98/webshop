@@ -19,7 +19,7 @@ export class App {
   product?: Product;
 
 updateProducts(product: Product) {
-this.product = product;
+  this.product = { ...product };
 }
 
   onActivate(component: any) {

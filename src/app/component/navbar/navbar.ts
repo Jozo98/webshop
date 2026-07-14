@@ -1,5 +1,10 @@
-import { Component, Input, signal, SimpleChanges } from '@angular/core';
+import { Component, computed, effect, Input, signal, SimpleChanges } from '@angular/core';
 import { Product } from '../../models/product.model';
+
+interface CartItem {
+  product: Product;
+  quantity: number;
+}
 
 @Component({
   selector: 'navbar',
@@ -8,23 +13,62 @@ import { Product } from '../../models/product.model';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-removeItem(product: Product) {
-  this.products.update(products => products.filter(p => p.id !== product.id));
-}
-
   @Input() product?: Product;
-  products = signal<Product[]>([]);
+
+  cartItems = signal<CartItem[]>(this.loadCart());
   isCartOpen = signal(false);
 
-  ngOnChanges(changes: SimpleChanges) {
-  if (changes['product'] && this.product) {
-    const exists = this.products().some(p => p.id === this.product!.id);
-    if (!exists) {
-      this.products.update(products => [...products, this.product!]);
-    }
-    console.log(this.products().length);
+  totalPrice = computed(() =>
+    this.cartItems().reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+  );
+
+  totalCount = computed(() =>
+    this.cartItems().reduce((sum, item) => sum + item.quantity, 0)
+  );
+
+  constructor() {
+    // 2. Automatically save to sessionStorage whenever cartItems changes
+    effect(() => {
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems()));
+    });
   }
-}
+
+  // Helper method to safely read and parse the session data
+  private loadCart(): CartItem[] {
+    const saved = sessionStorage.getItem('cartItems');
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['product'] && this.product) {
+      this.addProduct(this.product);
+    }
+
+  }
+
+  addProduct(product: Product) {
+    this.cartItems.update(items => {
+      const existing = items.find(i => i.product.id === product.id);
+      if (existing) {
+        return items.map(i =>
+          i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      }
+      return [...items, { product, quantity: 1 }];
+    });
+  }
+
+  removeItem(product: Product) {
+    this.cartItems.update(items => items.filter(i => i.product.id !== product.id));
+  }
+
+  decrementItem(product: Product) {
+    this.cartItems.update(items =>
+      items
+        .map(i => i.product.id === product.id ? { ...i, quantity: i.quantity - 1 } : i)
+        .filter(i => i.quantity > 0)
+    );
+  }
 
   toggleCart() {
     this.isCartOpen.update(open => !open);
@@ -32,9 +76,5 @@ removeItem(product: Product) {
 
   closeCart() {
     this.isCartOpen.set(false);
-  }
-
-  removeProduct(id: number) {
-    this.products.update(products => products.filter(p => p.id !== id));
   }
 }
