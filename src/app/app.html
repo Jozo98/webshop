@@ -1,4 +1,4 @@
-<navbar [product]="product"></navbar>
+<navbar [product]="product" (checkout)="onCheckoutClicked($event)"></navbar>
 <div class="content-wrapper">
   <sidemenu></sidemenu>
   <router-outlet (activate)="onActivate($event)"></router-outlet>

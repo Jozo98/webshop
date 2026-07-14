@@ -1,1 +1,28 @@
-<p>checkout works!</p>
+<div class="checkout-card">
+
+  <div class="checkout-total">
+    Total: {{ amount }} CHF
+  </div>
+
+  <div #paymentElement>
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading payment form...</p>
+      </div>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
+
+  <button
+    class="pay-btn"
+    [disabled]="isLoading()"
+    (click)="handlePayment()"
+  >
+    Pay {{ amount }} CHF
+  </button>
+
+</div>

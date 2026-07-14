@@ -25,14 +25,16 @@
                         <p class="product-price">${{ item.product.price }}</p>
                         <p class="product-description">{{ item.product.description }}</p>
                         <p>{{ item.quantity }}x</p>
-                        
+
                     </div>
                     } @empty {
                     <p class="empty-cart">Your cart is empty</p>
                     }
                     <div id="cart-bottom">
                         <span>{{ totalPrice() }}.-</span>
-                        <button class="checkout-btn">Checkout</button>
+                        <button class="checkout-btn" (click)="onSubmit()">
+                            Checkout
+                        </button>
                     </div>
                 </div>
                 }

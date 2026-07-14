@@ -1,37 +1,75 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { CardModule, SpinnerModule, ButtonDirective } from '@coreui/angular'
+import { Component, AfterViewInit, ViewChild, ElementRef, signal, Input } from '@angular/core'
 import { StripeService } from '../../services/stripe.service'
 import { Stripe, StripeElements, StripePaymentElement } from '@stripe/stripe-js'
 
 @Component({
   selector: 'checkout',
   standalone: true,
-  imports: [CardModule, SpinnerModule, ButtonDirective],
-  templateUrl: './checkout.html'
+  imports: [],
+  templateUrl: './checkout.html',
+  styleUrl: './checkout.css'
 })
-export class Checkout implements OnInit {
+export class Checkout implements AfterViewInit {
   @ViewChild('paymentElement') paymentElementRef!: ElementRef
   private stripe!: Stripe
   elements!: StripeElements
   paymentElement!: StripePaymentElement
-  isLoading = true
+
+  public amount = 0;
+  private initialized = false;
+  private viewReady = false;
+
+  isLoading = signal(true)
+  errorMessage = signal<string | null>(null)
 
   constructor(private stripeService: StripeService) {}
 
-  async ngOnInit() {
+  ngAfterViewInit() {
+    this.viewReady = true;
+    this.tryInit();
+  }
+
+  private async tryInit() {
+    if (this.initialized) return;
+    if (!this.viewReady) return;
+    if (!this.amount || this.amount <= 0) {
+      this.errorMessage.set('Your cart is empty.')
+      this.isLoading.set(false)
+      return;
+    }
+
+    this.initialized = true;
+    const amountInCents = Math.round(this.amount * 100)
+
     const stripe = await this.stripeService.getStripe()
     if (!stripe) return
     this.stripe = stripe
 
-    // Fetch clientSecret from your backend
-    const clientSecret = await this.stripeService.createPaymentIntent(2999, 'usd')
+    const clientSecret = await this.stripeService.createPaymentIntent(amountInCents, 'chf')
 
     this.elements = stripe.elements({ clientSecret })
-    this.paymentElement = this.elements.create('payment')
+    this.paymentElement = this.elements.create('payment', {
+      wallets: { link: 'never' }
+    })
     this.paymentElement.mount(this.paymentElementRef.nativeElement)
 
-    this.paymentElement.on('ready', () => {
-      this.isLoading = false
+    this.isLoading.set(false)
+  }
+
+  async handlePayment() {
+    if (!this.stripe || !this.elements) return
+    this.errorMessage.set(null)
+
+    const { error } = await this.stripe.confirmPayment({
+      elements: this.elements,
+      confirmParams: {
+        return_url: 'http://localhost:4200/checkout/success',
+      },
     })
+
+    if (error) {
+      this.errorMessage.set(error.message ?? 'Payment failed. Please try again.')
+    }
+    
   }
 }

@@ -1,0 +1,15 @@
+<div class="success-card">
+  @switch (status()) {
+    @case ('loading') {
+      <p>Checking payment status...</p>
+    }
+    @case ('succeeded') {
+      <h2>Payment successful!</h2>
+      <p>Thank you for your order.</p>
+    }
+    @case ('failed') {
+      <h2>Payment failed</h2>
+      <p>Something went wrong. Please try again.</p>
+    }
+  }
+</div>

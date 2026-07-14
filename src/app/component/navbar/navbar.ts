@@ -1,5 +1,6 @@
-import { Component, computed, effect, Input, signal, SimpleChanges } from '@angular/core';
+import { Component, computed, effect, EventEmitter, Input, Output, signal, SimpleChanges } from '@angular/core';
 import { Product } from '../../models/product.model';
+import { Router } from '@angular/router';
 
 interface CartItem {
   product: Product;
@@ -17,6 +18,7 @@ export class Navbar {
 
   cartItems = signal<CartItem[]>(this.loadCart());
   isCartOpen = signal(false);
+  @Output() checkout = new EventEmitter<number>();
 
   totalPrice = computed(() =>
     this.cartItems().reduce((sum, item) => sum + item.product.price * item.quantity, 0)
@@ -26,7 +28,7 @@ export class Navbar {
     this.cartItems().reduce((sum, item) => sum + item.quantity, 0)
   );
 
-  constructor() {
+  constructor(private router: Router) {
     // 2. Automatically save to sessionStorage whenever cartItems changes
     effect(() => {
       sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems()));
@@ -62,6 +64,10 @@ export class Navbar {
     this.cartItems.update(items => items.filter(i => i.product.id !== product.id));
   }
 
+  resetCart() {
+    this.cartItems.update(items => items.filter(i => i.product.id == -10));
+  }
+
   decrementItem(product: Product) {
     this.cartItems.update(items =>
       items
@@ -77,4 +83,10 @@ export class Navbar {
   closeCart() {
     this.isCartOpen.set(false);
   }
+
+  onSubmit() {
+  this.checkout.emit(this.totalPrice());
+  this.resetCart();
+  this.closeCart();
+}
 }

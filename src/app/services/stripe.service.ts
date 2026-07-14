@@ -18,7 +18,7 @@ export class StripeService {
 
   async createPaymentIntent(amount: number, currency: string): Promise<string> {
     const response = await firstValueFrom(
-      this.http.post<{ clientSecret: string }>('/api/create-payment-intent', {
+      this.http.post<{ clientSecret: string }>(`${environment.apiUrl}/create-payment-intent`, {
         amount,
         currency
       })
