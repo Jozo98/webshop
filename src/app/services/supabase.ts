@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient, PostgrestError } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/product.model';
@@ -21,7 +21,7 @@ export class SupabaseService {
       this.supabase
         .from('products')
         .select('*')
-        .then(({ data, error }) => {
+        .then(({ data, error }: { data: Product[] | null; error: PostgrestError | null }) => {
           if (error) throw error;
           return data as Product[];
         })
@@ -35,7 +35,7 @@ export class SupabaseService {
         .from('products')
         .select('*')
         .eq('category', category)
-        .then(({ data, error }) => {
+        .then(({ data, error }: { data: Product[] | null; error: PostgrestError | null }) => {
           if (error) throw error;
           return data as Product[];
         })
@@ -50,7 +50,7 @@ export class SupabaseService {
         .select('*')
         .eq('id', id)
         .single()
-        .then(({ data, error }) => {
+        .then(({ data, error }: { data: Product | null; error: PostgrestError | null }) => {
           if (error) throw error;
           return data as Product;
         })
@@ -65,7 +65,7 @@ export class SupabaseService {
         .insert(product)
         .select()
         .single()
-        .then(({ data, error }) => {
+        .then(({ data, error }: { data: Product | null; error: PostgrestError | null }) => {
           if (error) throw error;
           return data as Product;
         })
@@ -82,7 +82,7 @@ export class SupabaseService {
         .eq('id', id)
         .select()
         .single()
-        .then(({ data, error }) => {
+        .then(({ data, error }: { data: Product | null; error: PostgrestError | null }) => {
           if (error) throw error;
           return data as Product;
         })
@@ -96,7 +96,7 @@ export class SupabaseService {
         .from('products')
         .delete()
         .eq('id', id)
-        .then(({ error }) => {
+        .then(({ error }: { error: PostgrestError | null }) => {
           if (error) throw error;
         })
     );
