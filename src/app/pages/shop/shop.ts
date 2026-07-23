@@ -2,6 +2,7 @@ import { Component, DestroyRef, signal, inject, computed, Output, EventEmitter }
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SupabaseService } from '../../services/supabase';
 
 @Component({
   selector: 'shop',
@@ -10,6 +11,40 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './shop.css',
 })
 export class Shop {
+
+  private galleryIndex = signal<Record<number, number>>({});
+
+  currentImages(product: Product): string[] {
+    return this.categoryImages[product.category];
+  }
+
+  currentImage(product: Product): string {
+    const images = this.categoryImages[product.category];
+    if (product.id === undefined) return this.supabaseService.getImageUrl(images[0]);
+
+    const index = this.galleryIndex()[product.id] ?? 0;
+    return this.supabaseService.getImageUrl(images[index]);
+  }
+
+  private shiftGallery(product: Product, direction: 1 | -1) {
+    if (product.id === undefined) return;
+
+    const images = this.categoryImages[product.category];
+    if (!images || images.length === 0) return;
+
+    const current = this.galleryIndex()[product.id] ?? 0;
+    const next = (current + direction + images.length) % images.length;
+
+    this.galleryIndex.update(state => ({ ...state, [product.id!]: next }));
+  }
+
+  onClickGalleryLeft(product: Product) {
+    this.shiftGallery(product, -1);
+  }
+
+  onClickGalleryRight(product: Product) {
+    this.shiftGallery(product, 1);
+  }
 
   @Output() cart = new EventEmitter<Product>();
   products = signal<Product[]>([]);
@@ -23,21 +58,24 @@ export class Shop {
     return [...new Set(allCategories)];
   });
 
-  private readonly categoryImages: Record<string, string> = {
-    'Audio': 'apple_kopfhörer.jpg',
-    'Smartphones': 'phone.webp',
-    'Laptops': 'laptop-3.webp',
-    'Tablets': 'tablet.jpg',
-    'Wearables': 'watch.webp',
-    'Accessories': 'mouse.webp',
-    'Monitors': 'monitor.webp',
-    'Gaming': 'gaming.jpg',
-    'Drones': 'drone.webp',
-    'Cameras': 'camera.jpg',
-    'E-Readers': 'ereader.avif',
+  private readonly categoryImages: Record<string, string[]> = {
+    'Audio': ['apple-kopfhorer.jpg'],
+    'Smartphones': ['phone.webp', 'iphone.jpg'],
+    'Laptops': ['laptop-3.webp', 'laptop-1.webp', 'laptop-2.webp', 'laptop-4.webp'],
+    'Tablets': ['tablet.jpg'],
+    'Wearables': ['watch.webp'],
+    'Accessories': ['mouse.webp'],
+    'Monitors': ['monitor.webp'],
+    'Gaming': ['gaming.jpg'],
+    'Drones': ['drone.webp'],
+    'Cameras': ['camera.jpg'],
+    'E-Readers': ['ereader.avif'],
   };
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private supabaseService: SupabaseService
+  ) { }
 
   closeFilter() {
     const container = document.getElementById('filter-container');
@@ -120,8 +158,8 @@ export class Shop {
   }
 
   imageFor(product: Product): string {
-    const filename = this.categoryImages[product.category] ?? 'placeholder.webp';
-    return `/resources/${filename}`;
+    const images = this.categoryImages[product.category];
+    return images?.[0] ? this.supabaseService.getImageUrl(images[0]) : '/resources/placeholder.webp';
   }
 
   onRightClick(event: MouseEvent, product: Product): void {
@@ -135,10 +173,10 @@ export class Shop {
 
   //getAll
   loadProducts(): void {
-    const subscription = this.productService.getAll().subscribe({
+    const subscription = this.supabaseService.getProducts().subscribe({
       next: (data) => {
-        this.products.set(data._embedded.productList);
-        this.displayedProducts.set(data._embedded.productList);
+        this.products.set(data);
+        this.displayedProducts.set(data);
       },
       error: (err) => console.error('Failed to load products:', err)
     });
