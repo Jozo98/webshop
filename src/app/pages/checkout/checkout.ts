@@ -22,7 +22,7 @@ export class Checkout implements AfterViewInit {
   isLoading = signal(true)
   errorMessage = signal<string | null>(null)
 
-  constructor(private stripeService: StripeService) {}
+  constructor(private stripeService: StripeService) { }
 
   ngAfterViewInit() {
     this.viewReady = true;
@@ -63,13 +63,13 @@ export class Checkout implements AfterViewInit {
     const { error } = await this.stripe.confirmPayment({
       elements: this.elements,
       confirmParams: {
-        return_url: 'http://localhost:4200/checkout/success',
+        return_url: `${window.location.origin}/checkout/success`,
       },
-    })
+    });
 
     if (error) {
       this.errorMessage.set(error.message ?? 'Payment failed. Please try again.')
     }
-    
+
   }
 }
